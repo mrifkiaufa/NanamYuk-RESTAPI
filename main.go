@@ -4,6 +4,7 @@ import (
 	"nanam-yuk/handler"
 	"nanam-yuk/initializers"
 	"nanam-yuk/plant"
+	"nanam-yuk/session"
 	userplants "nanam-yuk/user-plants"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,10 @@ func main() {
 	userPlantsService := userplants.NewService(userPlantsRepository)
 	userPlantsHandler := handler.NewUserPlantsHandler(userPlantsService)
 
+	sessionRepository := session.NewRepository(initializers.DB)
+	sessionService := session.NewService(sessionRepository)
+	sessionHandler := handler.NewsessionHandler(sessionService)
+
 	//Membuat router untuk Endpoint
 	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
@@ -37,6 +42,7 @@ func main() {
 	plant := router.Group("/Plant")
 	userPlants := router.Group("/UserPlants")
 	auth := router.Group("/auth")
+	session := router.Group("/session")
 
 	plant.GET("/", plantHandler.GetPlants)
 	plant.GET("/:id", plantHandler.GetPlant)
@@ -48,6 +54,12 @@ func main() {
 	userPlants.POST("/", userPlantsHandler.CreatePlant)
 	userPlants.PATCH("/:id", userPlantsHandler.UpdatePlant)
 	userPlants.DELETE("/:id", userPlantsHandler.DeletePlant)
+
+	session.GET("/", sessionHandler.GetSessions)
+	session.GET("/:id", sessionHandler.GetSession)
+	session.POST("/", sessionHandler.CreateSession)
+	session.PATCH("/:id", sessionHandler.UpdateSession)
+	session.DELETE("/:id", sessionHandler.DeleteSession)
 
 	auth.POST("/register", handler.Register)
 	auth.POST("/login", handler.Login)
