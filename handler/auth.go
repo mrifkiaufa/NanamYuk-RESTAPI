@@ -96,7 +96,7 @@ func Login(c *gin.Context) {
 	if user.ID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": http.StatusBadRequest,
-			"message": "Invalid email",
+			"message": "Email tidak tersedia",
 		})
 		return
 	}
@@ -106,7 +106,7 @@ func Login(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": http.StatusBadRequest,
-			"message": "Invalid password",
+			"message": "Password yang anda masukkan salah",
 		})
 		return
 	}
