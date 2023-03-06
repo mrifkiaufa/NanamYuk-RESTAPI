@@ -25,7 +25,14 @@ func main() {
 	userPlantsHandler := handler.NewUserPlantsHandler(userPlantsService)
 
 	//Membuat router untuk Endpoint
+	//gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+
+	if gin.Mode() == gin.ReleaseMode {
+		router.Use(gin.Recovery())
+	} else {
+		router.Use(gin.Logger(), gin.Recovery())
+	}
 
 	plant := router.Group("/Plant")
 	userPlants := router.Group("/UserPlants")
@@ -46,5 +53,5 @@ func main() {
 	auth.POST("/login", handler.Login)
 	auth.POST("/logout", handler.Logout)
 
-	router.Run()
+	router.Run(":5000")
 }
