@@ -46,6 +46,36 @@ func (h *userPlantsHandler) GetUserPlants(c *gin.Context) {
 	})
 }
 
+func (h *userPlantsHandler) GetUserPlant(c *gin.Context) {
+	idString := c.Param(("id"))
+	id, _ := strconv.Atoi(idString)
+
+	p, err := h.userPlantsService.FindByID(int(id))
+
+	if p.ID == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status": http.StatusNotFound,
+			"message": "Data not found",
+		})
+		return
+	}
+	
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": err,
+		})
+		return
+	}
+
+	userPlantResponse := convertToUserPlantResponse(c, p, p.UserID, p.PlantID)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": http.StatusOK,
+		"response": userPlantResponse,
+	})
+}
+
 func (h *userPlantsHandler) CreatePlant(c *gin.Context) {
 	var userPlantRequest userplants.UserPlantsRequestCreate
 

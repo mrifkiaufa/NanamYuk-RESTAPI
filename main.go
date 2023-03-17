@@ -51,6 +51,7 @@ func main() {
 	plant.DELETE("/:id", plantHandler.DeletePlant)
 
 	userPlants.GET("/", userPlantsHandler.GetUserPlants)
+	userPlants.GET("/:id", userPlantsHandler.GetUserPlant)
 	userPlants.POST("/", userPlantsHandler.CreatePlant)
 	userPlants.PATCH("/:id", userPlantsHandler.UpdatePlant)
 	userPlants.DELETE("/:id", userPlantsHandler.DeletePlant)
