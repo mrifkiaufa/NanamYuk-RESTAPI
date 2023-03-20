@@ -200,7 +200,7 @@ func convertToUserPlantResponse(c *gin.Context, p userplants.UserPlants, userID 
 	var plant plant.Plant
 	initializers.DB.First(&plant, "ID = ?", p.PlantID)
 
-	split := strings.Split(plant.Temperature, ",")
+	split := strings.Split(plant.Temperature, "-")
 	minTemp := split[0]
 	maxTemp := split[1]
 	
