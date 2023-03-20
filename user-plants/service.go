@@ -31,7 +31,8 @@ func (s *service) FindByID(ID int) (UserPlants, error) {
 func (s *service) Create(userPlantsRequest UserPlantsRequestCreate) (UserPlants, error) {
 	userPlants := UserPlants{
 		TagName:       userPlantsRequest.TagName,
-		Date:          userPlantsRequest.Date,
+		WateringDate:  userPlantsRequest.WateringDate,
+		MoveDate:      userPlantsRequest.MoveDate,
 		WateringState: userPlantsRequest.WateringState,
 		DryState:      userPlantsRequest.DryState,
 		HumidState:    userPlantsRequest.HumidState,
@@ -47,7 +48,8 @@ func (s *service) Update(ID int, userPlantsRequest UserPlantsRequestUpdate) (Use
 	userPlants, _ := s.repository.FindByID(ID)
 
 	userPlants.TagName = userPlantsRequest.TagName
-	userPlants.Date = userPlantsRequest.Date
+	userPlants.WateringDate = userPlantsRequest.WateringDate
+	userPlants.MoveDate = userPlantsRequest.MoveDate
 	userPlants.WateringState = userPlantsRequest.WateringState
 	userPlants.DryState = userPlantsRequest.DryState
 	userPlants.HumidState = userPlantsRequest.HumidState

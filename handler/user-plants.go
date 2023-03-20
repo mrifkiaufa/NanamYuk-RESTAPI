@@ -8,6 +8,7 @@ import (
 	userplants "nanam-yuk/user-plants"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -198,16 +199,23 @@ func convertToUserPlantResponse(c *gin.Context, p userplants.UserPlants, userID 
 
 	var plant plant.Plant
 	initializers.DB.First(&plant, "ID = ?", p.PlantID)
+
+	split := strings.Split(plant.Temperature, ",")
+	minTemp := split[0]
+	maxTemp := split[1]
 	
 	return userplants.UserPlantsResponse{
 		ID: p.ID,
 		TagName: p.TagName,
-		Date: p.Date,
+		WateringDate: p.WateringDate,
+		MoveDate: p.MoveDate,
 		WateringState: p.WateringState,
 		DryState: p.DryState,
 		HumidState: p.HumidState,
 		Plant: userplants.PlantItem{
 			PlantID: plant.ID,
+			MinTemp: minTemp,
+			MaxTemp: maxTemp,
 			Image: plant.Image,
 			PlantName: plant.Name,
 			WateringDuration: plant.WateringDuration,

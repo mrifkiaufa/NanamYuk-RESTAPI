@@ -2,7 +2,8 @@ package userplants
 
 type UserPlantsRequestCreate struct {
 	TagName       string `json:"tag_name" binding:"required"`
-	Date          string `json:"date" binding:"required"`
+	WateringDate  string `json:"watering_date" binding:"required"`
+	MoveDate      string `json:"move_date" binding:"required"`
 	WateringState bool   `json:"watering_state"`
 	DryState      bool   `json:"dry_state"`
 	HumidState    bool   `json:"humid_state"`
@@ -12,7 +13,8 @@ type UserPlantsRequestCreate struct {
 
 type UserPlantsRequestUpdate struct {
 	TagName       string `json:"tag_name"`
-	Date          string `json:"date"`
+	WateringDate  string `json:"watering_date"`
+	MoveDate      string `json:"move_date"`
 	WateringState bool   `json:"watering_state"`
 	DryState      bool   `json:"dry_state"`
 	HumidState    bool   `json:"humid_state"`

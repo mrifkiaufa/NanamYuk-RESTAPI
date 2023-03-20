@@ -5,7 +5,8 @@ import "time"
 type UserPlants struct {
 	ID            int
 	TagName       string
-	Date          string
+	WateringDate          string
+	MoveDate          string
 	WateringState bool
 	DryState      bool
 	HumidState    bool
