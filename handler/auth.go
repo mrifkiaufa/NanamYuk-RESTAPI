@@ -27,6 +27,46 @@ func Register(c *gin.Context) {
 		return
 	}
 
+	if (body.Name == "" && body.Email == "" && body.Password == "") {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": "Please fil the data first",
+		})
+		return
+	}
+
+	if (body.Name == "" || body.Name == " ") {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": "Please fil the name first",
+		})
+		return
+	}
+
+	if (body.Email == "" || body.Email == " ") {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": "Please fil the email first",
+		})
+		return
+	}
+
+	if (body.Password == "" || body.Password == " ") {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": "Please fil the password first",
+		})
+		return
+	}
+
+	if (len(body.Password) < 6) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": http.StatusBadRequest,
+			"message": "Password cannot shorter than 6 characters",
+		})
+		return
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
